@@ -41,7 +41,7 @@
   --font-serif: Georgia, serif;
   --font-mono: Fira Code, monospace;
   --radius: 0.35rem;
-  --shadow-2xs: 0px 2px 0px 0px hsl(0 0% 20% / 0.07);
+  /* --shadow-2xs: 0px 2px 0px 0px hsl(0 0% 20% / 0.07);
   --shadow-xs: 0px 2px 0px 0px hsl(0 0% 20% / 0.07);
   --shadow-sm:
     0px 2px 0px 0px hsl(0 0% 20% / 0.15), 0px 1px 2px -1px hsl(0 0% 20% / 0.15);
@@ -55,7 +55,7 @@
     0px 2px 0px 0px hsl(0 0% 20% / 0.15), 0px 8px 10px -1px hsl(0 0% 20% / 0.15);
   --shadow-2xl: 0px 2px 0px 0px hsl(0 0% 20% / 0.38);
   --tracking-normal: 0em;
-  --spacing: 0.25rem;
+  --spacing: 0.25rem; */
 }
 
 .dark {
@@ -95,7 +95,7 @@
   --font-serif: Georgia, serif;
   --font-mono: Fira Code, monospace;
   --radius: 0.35rem;
-  --shadow-2xs: 0px 2px 0px 0px hsl(0 0% 20% / 0.07);
+  /* --shadow-2xs: 0px 2px 0px 0px hsl(0 0% 20% / 0.07);
   --shadow-xs: 0px 2px 0px 0px hsl(0 0% 20% / 0.07);
   --shadow-sm:
     0px 2px 0px 0px hsl(0 0% 20% / 0.15), 0px 1px 2px -1px hsl(0 0% 20% / 0.15);
@@ -107,7 +107,7 @@
     0px 2px 0px 0px hsl(0 0% 20% / 0.15), 0px 4px 6px -1px hsl(0 0% 20% / 0.15);
   --shadow-xl:
     0px 2px 0px 0px hsl(0 0% 20% / 0.15), 0px 8px 10px -1px hsl(0 0% 20% / 0.15);
-  --shadow-2xl: 0px 2px 0px 0px hsl(0 0% 20% / 0.38);
+  --shadow-2xl: 0px 2px 0px 0px hsl(0 0% 20% / 0.38); */
 }
 
 @theme inline {
@@ -153,14 +153,14 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 
-  --shadow-2xs: var(--shadow-2xs);
+  /* --shadow-2xs: var(--shadow-2xs);
   --shadow-xs: var(--shadow-xs);
   --shadow-sm: var(--shadow-sm);
   --shadow: var(--shadow);
   --shadow-md: var(--shadow-md);
   --shadow-lg: var(--shadow-lg);
   --shadow-xl: var(--shadow-xl);
-  --shadow-2xl: var(--shadow-2xl);
+  --shadow-2xl: var(--shadow-2xl); */
 }
 
 @layer base {
