@@ -17,7 +17,7 @@ export const ThemeSwitcher = () => {
   if (!isMounted) return null;
 
   return (
-    <Tabs defaultValue={theme}>
+    <Tabs defaultValue={theme || "dark"}>
       <TabsList className="border">
         <TabsTrigger value="light" onClick={() => setTheme("light")}>
           <SunIcon size={20} />
