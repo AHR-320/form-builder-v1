@@ -6,8 +6,8 @@ import { Button } from "@/components/ui/button";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="bg-background flex max-h-screen min-h-screen min-w-full flex-col">
-      <nav className="border-border flex h-16 items-center justify-between border-b px-4 py-2">
+    <div className="bg-background flex min-h-screen min-w-full flex-col">
+      <nav className="border-border flex h-16 items-center justify-between border-b px-4 py-2 md:px-8">
         <Logo />
         <div className="flex items-center gap-4">
           <ThemeSwitcher />
@@ -17,11 +17,19 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
             </SignInButton>
           </SignedOut>
           <SignedIn>
-            <UserButton />
+            <UserButton
+              appearance={{
+                elements: {
+                  userButtonBox: "rounded-md!",
+                  userButtonAvatarBox: "rounded-md! size-9!",
+                  userButtonTrigger: "rounded-md!",
+                },
+              }}
+            />
           </SignedIn>
         </div>
       </nav>
-      <main className="flex w-full flex-grow justify-center">{children}</main>
+      <main className="flex w-full">{children}</main>
     </div>
   );
 };

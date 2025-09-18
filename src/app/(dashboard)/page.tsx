@@ -8,9 +8,11 @@ import {
 
 import { cn } from "@/lib/utils";
 import { GetFormStats } from "@/actions/form-stats";
+import { CreateFormButton } from "@/components/create-form-button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { FormCards, FormCardsSkeleton } from "@/components/form-cards";
 
 interface StatsCardProps {
   title: string;
@@ -104,13 +106,22 @@ export const CardStatsWrapper = async () => {
 
 const DashboardPage = () => {
   return (
-    <div className="container pt-4">
+    <div className="flex w-full flex-col space-y-8 p-4 md:px-8">
       <Suspense fallback={<StatsCards isLoading />}>
         <CardStatsWrapper />
       </Suspense>
-      <Separator className="my-6" />
-      <h2 className="col-span-2 text-4xl font-bold">Your forms</h2>
-      <Separator className="my-6" />
+      <Separator className="opacity-30" />
+      <h2 className="col-span-2 text-3xl font-bold">Your forms</h2>
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <CreateFormButton />
+        <Suspense
+          fallback={[...Array(3)].map((_, index) => (
+            <FormCardsSkeleton key={index} />
+          ))}
+        >
+          <FormCards />
+        </Suspense>
+      </div>
     </div>
   );
 };

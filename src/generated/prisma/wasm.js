@@ -158,7 +158,7 @@ const config = {
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": "../../../.env",
+    "rootEnvPath": null,
     "schemaEnvPath": "../../../.env"
   },
   "relativePath": "../../../prisma",
@@ -168,7 +168,6 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
-  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -177,8 +176,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Form {\n  id          Int     @id @default(autoincrement())\n  userId      String\n  published   Boolean\n  name        String\n  description String  @default(\"\")\n  content     String  @default(\"[]\")\n\n  visits      Int @default(0)\n  submissions Int @default(0)\n\n  shareURL       String           @default(uuid())\n  FormSubmission FormSubmission[]\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n\nmodel FormSubmission {\n  id      Int    @id @default(autoincrement())\n  content String\n\n  formId Int\n  form   Form @relation(fields: [formId], references: [id])\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n",
-  "inlineSchemaHash": "fd50322c39b866ca69832b804dddba97c721b78ea16e3a59001b366b44df7934",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Form {\n  id          Int     @id @default(autoincrement())\n  userId      String\n  published   Boolean @default(false)\n  name        String\n  description String  @default(\"\")\n  content     String  @default(\"[]\")\n\n  visits      Int @default(0)\n  submissions Int @default(0)\n\n  shareURL       String           @default(uuid())\n  FormSubmission FormSubmission[]\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  @@unique([userId, name])\n}\n\nmodel FormSubmission {\n  id      Int    @id @default(autoincrement())\n  content String\n\n  formId Int\n  form   Form @relation(fields: [formId], references: [id])\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n",
+  "inlineSchemaHash": "4cf66b0a0c9699afd639463c99f55cfbf91b3160e2b798bf1a640bbdb9bfe958",
   "copyEngine": true
 }
 config.dirname = '/'
