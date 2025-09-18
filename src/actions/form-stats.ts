@@ -1,17 +1,10 @@
 "use server";
 
-import { redirect } from "next/navigation";
-import { currentUser } from "@clerk/nextjs/server";
-
 import { prisma } from "@/lib/db";
+import { GetAuthUser } from "@/actions/get-auth-user";
 
 export async function GetFormStats() {
-  const user = await currentUser();
-
-  if (!user) {
-    // throw new Error("User not found");
-    redirect("/sign-in");
-  }
+  const user = await GetAuthUser();
 
   const stats = await prisma.form.aggregate({
     where: {

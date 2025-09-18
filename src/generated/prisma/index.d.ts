@@ -3431,6 +3431,7 @@ export namespace Prisma {
 
   export type FormWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    userId_name?: FormUserIdNameCompoundUniqueInput
     AND?: FormWhereInput | FormWhereInput[]
     OR?: FormWhereInput[]
     NOT?: FormWhereInput | FormWhereInput[]
@@ -3445,7 +3446,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Form"> | Date | string
     updatedAt?: DateTimeFilter<"Form"> | Date | string
     FormSubmission?: FormSubmissionListRelationFilter
-  }, "id">
+  }, "id" | "userId_name">
 
   export type FormOrderByWithAggregationInput = {
     id?: SortOrder
@@ -3542,7 +3543,7 @@ export namespace Prisma {
 
   export type FormCreateInput = {
     userId: string
-    published: boolean
+    published?: boolean
     name: string
     description?: string
     content?: string
@@ -3557,7 +3558,7 @@ export namespace Prisma {
   export type FormUncheckedCreateInput = {
     id?: number
     userId: string
-    published: boolean
+    published?: boolean
     name: string
     description?: string
     content?: string
@@ -3601,7 +3602,7 @@ export namespace Prisma {
   export type FormCreateManyInput = {
     id?: number
     userId: string
-    published: boolean
+    published?: boolean
     name: string
     description?: string
     content?: string
@@ -3741,6 +3742,11 @@ export namespace Prisma {
 
   export type FormSubmissionOrderByRelationAggregateInput = {
     _count?: SortOrder
+  }
+
+  export type FormUserIdNameCompoundUniqueInput = {
+    userId: string
+    name: string
   }
 
   export type FormCountOrderByAggregateInput = {
@@ -4127,7 +4133,7 @@ export namespace Prisma {
 
   export type FormCreateWithoutFormSubmissionInput = {
     userId: string
-    published: boolean
+    published?: boolean
     name: string
     description?: string
     content?: string
@@ -4141,7 +4147,7 @@ export namespace Prisma {
   export type FormUncheckedCreateWithoutFormSubmissionInput = {
     id?: number
     userId: string
-    published: boolean
+    published?: boolean
     name: string
     description?: string
     content?: string
