@@ -2,8 +2,9 @@ import { useDraggable } from "@dnd-kit/core";
 
 import { cn } from "@/lib/utils";
 
-import { FormElement } from "./form-elements";
-import { Button } from "./ui/button";
+import { FormElement } from "@/modules/form-builder/components/form-elements";
+
+import { Button } from "@/components/ui/button";
 
 export const SidebarButtonElement = ({
   formElement,

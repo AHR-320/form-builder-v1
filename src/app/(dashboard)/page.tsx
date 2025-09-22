@@ -7,12 +7,15 @@ import {
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { GetFormStats } from "@/actions/form-stats";
-import { CreateFormButton } from "@/components/create-form-button";
+import { getFormStats } from "@/actions/form-stats";
+import { CreateFormButton } from "@/modules/form/components/ui/create-form-button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Separator } from "@/components/ui/separator";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { FormCards, FormCardsSkeleton } from "@/components/form-cards";
+import {
+  FormCards,
+  FormCardsSkeleton,
+} from "@/modules/form/components/ui/form-cards";
 
 interface StatsCardProps {
   title: string;
@@ -56,7 +59,7 @@ export const StatsCard = ({
 
 interface StatsCardsProps {
   isLoading: boolean;
-  data?: Awaited<ReturnType<typeof GetFormStats>>;
+  data?: Awaited<ReturnType<typeof getFormStats>>;
 }
 
 export const StatsCards = ({ isLoading, data }: StatsCardsProps) => {
@@ -99,7 +102,7 @@ export const StatsCards = ({ isLoading, data }: StatsCardsProps) => {
 };
 
 export const CardStatsWrapper = async () => {
-  const stats = await GetFormStats();
+  const stats = await getFormStats();
 
   return <StatsCards isLoading={false} data={stats} />;
 };

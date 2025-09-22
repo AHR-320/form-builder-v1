@@ -1,7 +1,8 @@
 import { UserButton, SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
 
-import { Logo } from "@/components/logo";
-import { ThemeSwitcher } from "@/components/theme-switcher";
+import { Logo } from "@/modules/home/components/ui/logo";
+import { ThemeSwitcher } from "@/modules/home/components/ui/theme-switcher";
+
 import { Button } from "@/components/ui/button";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {

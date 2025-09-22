@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { CreateForm } from "@/actions/create-form";
+import { createForm } from "@/actions/create-form";
 import { createFormSchema, createFormSchemaType } from "@/lib/schemas";
 
 import { Button } from "@/components/ui/button";
@@ -44,7 +44,7 @@ export const CreateFormButton = () => {
 
   const onSubmit = async (values: createFormSchemaType) => {
     try {
-      const formId = await CreateForm(values);
+      const formId = await createForm(values);
       toast.success("Form created succesfully");
       form.reset();
       setIsOpen(false);

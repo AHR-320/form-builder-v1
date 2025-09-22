@@ -1,10 +1,10 @@
 "use server";
 
 import { prisma } from "@/lib/db";
-import { GetAuthUser } from "@/actions/get-auth-user";
+import { getAuthUser } from "@/actions/get-auth-user";
 
-export async function GetFormStats() {
-  const user = await GetAuthUser();
+export async function getFormStats() {
+  const user = await getAuthUser();
 
   const stats = await prisma.form.aggregate({
     where: {

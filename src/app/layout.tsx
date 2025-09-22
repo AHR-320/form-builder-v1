@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import NextTopLoader from "nextjs-toploader";
 
 import { ClerkProvider } from "@clerk/nextjs";
 import { shadcn } from "@clerk/themes";
 
-import { ThemeProvider } from "@/components/providers/theme-provider";
-import { DesignerContextProvider } from "@/components/context/designer-context";
 import { Toaster } from "@/components/ui/sonner";
+
+import { ThemeProvider } from "@/modules/home/providers/theme-provider";
+import { DesignerContextProvider } from "@/modules/form-builder/context/designer-context";
 
 import "./globals.css";
 
@@ -40,6 +42,7 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
+          <NextTopLoader />
           <DesignerContextProvider>
             <ThemeProvider
               attribute="class"
