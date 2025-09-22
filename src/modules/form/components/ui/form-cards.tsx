@@ -8,7 +8,8 @@ import Link from "next/link";
 import { formatDistance } from "date-fns";
 
 import { Form } from "@/generated/prisma";
-import { GetForms } from "@/actions/get-form-list";
+import { getForms } from "@/actions/get-form-list";
+
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -77,7 +78,7 @@ const FormCard = ({ form }: { form: Form }) => {
 };
 
 export const FormCards = async () => {
-  const forms = await GetForms();
+  const forms = await getForms();
   return (
     <>
       {forms.map((form) => (

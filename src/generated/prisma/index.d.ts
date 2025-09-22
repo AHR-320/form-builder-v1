@@ -3431,7 +3431,8 @@ export namespace Prisma {
 
   export type FormWhereUniqueInput = Prisma.AtLeast<{
     id?: number
-    userId_name?: FormUserIdNameCompoundUniqueInput
+    shareURL?: string
+    userId_name_shareURL?: FormUserIdNameShareURLCompoundUniqueInput
     AND?: FormWhereInput | FormWhereInput[]
     OR?: FormWhereInput[]
     NOT?: FormWhereInput | FormWhereInput[]
@@ -3442,11 +3443,10 @@ export namespace Prisma {
     content?: StringFilter<"Form"> | string
     visits?: IntFilter<"Form"> | number
     submissions?: IntFilter<"Form"> | number
-    shareURL?: StringFilter<"Form"> | string
     createdAt?: DateTimeFilter<"Form"> | Date | string
     updatedAt?: DateTimeFilter<"Form"> | Date | string
     FormSubmission?: FormSubmissionListRelationFilter
-  }, "id" | "userId_name">
+  }, "id" | "shareURL" | "userId_name_shareURL">
 
   export type FormOrderByWithAggregationInput = {
     id?: SortOrder
@@ -3744,9 +3744,10 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
-  export type FormUserIdNameCompoundUniqueInput = {
+  export type FormUserIdNameShareURLCompoundUniqueInput = {
     userId: string
     name: string
+    shareURL: string
   }
 
   export type FormCountOrderByAggregateInput = {

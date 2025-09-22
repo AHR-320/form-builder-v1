@@ -1,7 +1,7 @@
 "use client";
 
-import { Trash2Icon } from "lucide-react";
-import { useState } from "react";
+import { Loader2Icon, Trash2Icon } from "lucide-react";
+import { useEffect, useState } from "react";
 import {
   DragEndEvent,
   useDndMonitor,
@@ -12,14 +12,15 @@ import {
 import { cn } from "@/lib/utils";
 import { idGenerator } from "@/lib/utils";
 
-import { useDesigner } from "./hooks/use-designer";
-import { DesignerSidebar } from "./designer-sidebar";
+import { useDesigner } from "@/modules/form-builder/hooks/use-designer";
 import {
   ElementsType,
   FormElementInstance,
   FormElements,
-} from "./form-elements";
-import { Button } from "./ui/button";
+} from "@/modules/form-builder/components/form-elements";
+import { DesignerSidebar } from "@/modules/form-builder/components/ui/designer-sidebar";
+
+import { Button } from "@/components/ui/button";
 
 const DesignerElementWrapper = ({
   element,
@@ -126,16 +127,37 @@ const DesignerElementWrapper = ({
   );
 };
 
-export const Designer = () => {
-  const { elements, addElement, selectedElement, setSelectedElement } =
-    useDesigner();
+export const Designer = ({ content }: { content: string }) => {
+  const [isReady, setIsReady] = useState(false);
+
+  const {
+    elements,
+    setElements,
+    addElement,
+    removeElement,
+    selectedElement,
+    setSelectedElement,
+  } = useDesigner();
 
   const droppable = useDroppable({
     id: "designer-drop-area",
     data: {
-      isDesignerDroppable: true,
+      isDesignerDropArea: true,
     },
   });
+
+  useEffect(() => {
+    if (isReady) return;
+
+    const elements = JSON.parse(content);
+    setElements(elements);
+
+    const timeout = setTimeout(() => {
+      setIsReady(true);
+    }, 500);
+
+    return () => clearTimeout(timeout);
+  }, [isReady, content, setElements]);
 
   useDndMonitor({
     onDragEnd: (event: DragEndEvent) => {
@@ -146,12 +168,91 @@ export const Designer = () => {
       const isDesignerButtonElement =
         active.data?.current?.isDesignerButtonElement;
 
-      if (isDesignerButtonElement) {
+      const isDroppingOverDesignerDropArea =
+        over.data?.current?.isDesignerDropArea;
+
+      const droppingSidebarButtonOverDesignerDropArea =
+        isDesignerButtonElement && isDroppingOverDesignerDropArea;
+
+      if (droppingSidebarButtonOverDesignerDropArea) {
         const type = active.data?.current?.type as ElementsType;
 
         const newElement = FormElements[type].construct(idGenerator());
 
-        addElement(0, newElement);
+        addElement(elements.length, newElement);
+      }
+
+      const isDroppingOverDesignerElementTopHalf =
+        over.data?.current?.isTopHalfDesignerElement;
+
+      const isDroppingOverDesignerElementBottomHalf =
+        over.data?.current?.isBottomHalfDesignerElement;
+
+      const isDroppingOverDesignerElement =
+        isDroppingOverDesignerElementTopHalf ||
+        isDroppingOverDesignerElementBottomHalf;
+
+      const droppingSidebarButtonOverDesignerElement =
+        isDesignerButtonElement && isDroppingOverDesignerElement;
+
+      if (droppingSidebarButtonOverDesignerElement) {
+        const type = active.data?.current?.type as ElementsType;
+
+        const newElement = FormElements[type].construct(idGenerator());
+
+        const overId = over.data?.current?.elementId;
+
+        const overElementIndex = elements.findIndex((el) => el.id === overId);
+
+        if (overElementIndex === -1) {
+          throw new Error("Element not found");
+        }
+
+        let indexForNewElement = overElementIndex;
+
+        if (isDroppingOverDesignerElementBottomHalf) {
+          indexForNewElement = overElementIndex + 1;
+        }
+
+        addElement(indexForNewElement, newElement);
+      }
+
+      const isDraggingDesignerElement = active.data?.current?.isDesignerElement;
+
+      const draggingDesignerElementOverAnotherDesignerElement =
+        isDraggingDesignerElement && isDroppingOverDesignerElement;
+
+      if (draggingDesignerElementOverAnotherDesignerElement) {
+        const activeId = active.data?.current?.elementId;
+        const overId = over.data?.current?.elementId;
+
+        const activeElementIndex = elements.findIndex(
+          (el) => el.id === activeId,
+        );
+        const overElementIndex = elements.findIndex((el) => el.id === overId);
+
+        if (activeElementIndex === -1 || overElementIndex === -1) {
+          throw new Error("Element not found");
+        }
+
+        const activeElement = { ...elements[activeElementIndex] };
+        removeElement(activeId);
+
+        let indexForNewElement = overElementIndex;
+
+        if (
+          activeElementIndex > overElementIndex &&
+          isDroppingOverDesignerElementBottomHalf
+        ) {
+          indexForNewElement += 1;
+        } else if (
+          activeElementIndex < overElementIndex &&
+          isDroppingOverDesignerElementTopHalf
+        ) {
+          indexForNewElement -= 1;
+        }
+
+        addElement(indexForNewElement, activeElement);
       }
     },
   });
@@ -171,7 +272,11 @@ export const Designer = () => {
             droppable.isOver && "ring-primary/20 ring-2",
           )}
         >
-          {elements.length > 0 ? (
+          {!isReady ? (
+            <div className="flex h-full w-full items-center justify-center">
+              <Loader2Icon className="animate-spin" />
+            </div>
+          ) : elements.length > 0 ? (
             <div className="flex w-full flex-col gap-2 p-4">
               {elements.map((element) => (
                 <DesignerElementWrapper key={element.id} element={element} />

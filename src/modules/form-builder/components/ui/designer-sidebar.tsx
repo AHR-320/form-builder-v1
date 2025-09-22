@@ -1,8 +1,8 @@
 "use client";
 
-import { useDesigner } from "./hooks/use-designer";
-import { FormElementsSidebar } from "./form-elements-sidebar";
-import { ElementPropertiesSidebar } from "./element-properties-sidebar";
+import { useDesigner } from "@/modules/form-builder/hooks/use-designer";
+import { FormElementsSidebar } from "@/modules/form-builder/components/ui/form-elements-sidebar";
+import { ElementPropertiesSidebar } from "@/modules/form-builder/components/ui/element-properties-sidebar";
 
 export const DesignerSidebar = () => {
   const { selectedElement } = useDesigner();

@@ -2,16 +2,16 @@
 
 import { prisma } from "@/lib/db";
 import { createFormSchema, createFormSchemaType } from "@/lib/schemas";
-import { GetAuthUser } from "@/actions/get-auth-user";
+import { getAuthUser } from "@/actions/get-auth-user";
 
-export async function CreateForm(data: createFormSchemaType) {
+export async function createForm(data: createFormSchemaType) {
   const isValid = createFormSchema.safeParse(data);
 
   if (!isValid.success) {
     throw new Error("Data not valid");
   }
 
-  const user = await GetAuthUser();
+  const user = await getAuthUser();
 
   const form = await prisma.form.create({
     data: {

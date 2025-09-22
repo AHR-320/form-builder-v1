@@ -1,5 +1,5 @@
-import { GetFormById } from "@/actions/get-form";
-import { FormBuilder } from "@/components/form-builder";
+import { getFormById } from "@/actions/get-form";
+import { FormBuilder } from "@/modules/form-builder/components/views/form-builder";
 
 interface FormBuilderProps {
   params: Promise<{
@@ -10,7 +10,7 @@ interface FormBuilderProps {
 const FormBuilderPage = async ({ params }: FormBuilderProps) => {
   const { formId } = await params;
 
-  const form = await GetFormById(Number(formId));
+  const form = await getFormById(Number(formId));
 
   if (!form) {
     throw new Error("Form not found");
