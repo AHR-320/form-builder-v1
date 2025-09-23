@@ -18,7 +18,7 @@ import { Form } from "@/generated/prisma";
 import { PreviewDialogButton } from "@/modules/form-builder/components/ui/preview-dialog-button";
 import { SaveFormButton } from "@/modules/form-builder/components/ui/save-form-button";
 import { PublishFormButton } from "@/modules/form-builder/components/ui/publish-form-button";
-import { Designer } from "@/modules/form-builder/components/ui/designer-canvas";
+import { DesignerCanvas } from "@/modules/form-builder/components/ui/designer-canvas";
 import { DragOverlayWrapper } from "@/modules/form-builder/components/ui/drag-overlay-wrapper";
 
 import { Button } from "@/components/ui/button";
@@ -112,7 +112,7 @@ export const FormBuilder = ({ form }: { form: Form }) => {
           </div>
         </nav>
         <div className="bg-accent relative flex h-[200px] w-full flex-grow items-center justify-center overflow-y-auto bg-[url(/paper-light.svg)] dark:bg-[url(/paper-dark.svg)]">
-          <Designer content={form.content} />
+          <DesignerCanvas content={form.content} />
         </div>
       </main>
       <DragOverlayWrapper />

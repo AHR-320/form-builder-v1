@@ -1,6 +1,6 @@
 import { getFormByUrl } from "@/actions/get-form";
 
-import { FormElementInstance } from "@/components/form-elements";
+import { FormElementInstance } from "@/modules/form-builder/components/form-elements";
 import { FormSubmitComponent } from "@/modules/form/components/ui/form-submit-component";
 
 interface FormSubmitProps {

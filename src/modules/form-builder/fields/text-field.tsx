@@ -1,11 +1,13 @@
 "use client";
 
 import { z } from "zod";
-import { FileInputIcon } from "lucide-react";
+import { MdTextFields } from "react-icons/md";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+
+import { cn } from "@/lib/utils";
 
 import { useDesigner } from "@/modules/form-builder/hooks/use-designer";
 import {
@@ -27,7 +29,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { cn } from "@/lib/utils";
 
 const type: ElementsType = "TextField";
 
@@ -67,7 +68,7 @@ export const TextFieldFormElement: FormElement = {
     return true;
   },
   designerButtonElement: {
-    icon: FileInputIcon,
+    icon: MdTextFields,
     label: "Text Field",
   },
   designerComponent: DesignerComponent,
