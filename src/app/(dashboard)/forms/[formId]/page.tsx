@@ -2,6 +2,8 @@ import { getFormById, getFormWithSubmissions } from "@/actions/get-form";
 
 import { StatsCards } from "../../page";
 
+import { cn } from "@/lib/utils";
+
 import { VisitButton } from "@/modules/form/components/ui/visit-button";
 import { FormLinkShare } from "@/modules/form/components/ui/form-link-share";
 
@@ -17,7 +19,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { formatDistance } from "date-fns";
+import { format, formatDistance } from "date-fns";
+import { Badge } from "@/components/ui/badge";
+import { Checkbox } from "@/components/ui/checkbox";
 
 interface FormDetailsProps {
   params: Promise<{
@@ -97,6 +101,11 @@ async function SubmissionsTable({ id }: { id: number }) {
   formElements.forEach((element) => {
     switch (element.type) {
       case "TextField":
+      case "NumberField":
+      case "TextAreaField":
+      case "DateField":
+      case "SelectField":
+      case "CheckboxField":
         columns.push({
           id: element.id,
           label: element.extraAttributes?.label,
@@ -129,11 +138,19 @@ async function SubmissionsTable({ id }: { id: number }) {
           <TableHeader>
             <TableRow>
               {columns.map((column) => (
-                <TableHead key={column.id} className="uppercase">
+                <TableHead
+                  key={column.id}
+                  className={cn(
+                    "text-center uppercase",
+                    (column.type === "TextField" ||
+                      column.type === "TextAreaField") &&
+                      "text-left",
+                  )}
+                >
                   {column.label}
                 </TableHead>
               ))}
-              <TableHead className="to-muted-foreground text-right uppercase">
+              <TableHead className="to-muted-foreground text-center uppercase">
                 Submitted at
               </TableHead>
             </TableRow>
@@ -148,7 +165,7 @@ async function SubmissionsTable({ id }: { id: number }) {
                     value={row[column.id]}
                   />
                 ))}
-                <TableCell className="text-muted-foreground text-right">
+                <TableCell className="text-muted-foreground text-center">
                   {formatDistance(row.submittedAt, new Date(), {
                     addSuffix: true,
                   })}
@@ -163,7 +180,38 @@ async function SubmissionsTable({ id }: { id: number }) {
 }
 
 function RowCell({ type, value }: { type: ElementsType; value: string }) {
-  const node: React.ReactNode = value;
+  let node: React.ReactNode = value;
 
-  return <TableCell>{node}</TableCell>;
+  switch (type) {
+    case "DateField":
+      if (!value) break;
+
+      const date = new Date(value);
+      node = (
+        <Badge variant="outline" className="rounded-full px-2 py-1">
+          {format(date, "dd/MM/yyy")}
+        </Badge>
+      );
+      break;
+    case "CheckboxField":
+      if (!value) break;
+
+      const checked = value === "true";
+      node = <Checkbox checked={checked} disabled />;
+      break;
+
+    default:
+      break;
+  }
+
+  return (
+    <TableCell
+      className={cn(
+        "text-center",
+        (type === "TextField" || type === "TextAreaField") && "text-left",
+      )}
+    >
+      {node}
+    </TableCell>
+  );
 }

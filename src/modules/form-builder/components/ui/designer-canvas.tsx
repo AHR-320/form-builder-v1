@@ -127,7 +127,7 @@ const DesignerElementWrapper = ({
   );
 };
 
-export const Designer = ({ content }: { content: string }) => {
+export const DesignerCanvas = ({ content }: { content: string }) => {
   const [isReady, setIsReady] = useState(false);
 
   const {
@@ -152,12 +152,14 @@ export const Designer = ({ content }: { content: string }) => {
     const elements = JSON.parse(content);
     setElements(elements);
 
+    setSelectedElement(null);
+
     const timeout = setTimeout(() => {
       setIsReady(true);
     }, 500);
 
     return () => clearTimeout(timeout);
-  }, [isReady, content, setElements]);
+  }, [isReady, content, setElements, setSelectedElement]);
 
   useDndMonitor({
     onDragEnd: (event: DragEndEvent) => {
